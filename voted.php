@@ -14,10 +14,25 @@ $conn = connect_db("root", "", "db_esercizio7");
 </head>
 <body>
 <?php
-if(isset($_REQUEST['vote']) and isset($_SESSION['user_auth'])){
-    echo "";
+if (isset($_POST['vote']) and isset($_SESSION['user_auth'])) {
+    $voted_picture = $_POST['vote'];
+    $user = $_SESSION['user_auth'];
+    ?>
+    <p>Hai votato <?= $voted_picture ?> loggato come <?= $user ?></p>
+    <?php
+    $sql = "SELECT id FROM utenti WHERE nome_utente='$user'";
+    $id_user = -1;
+    $result = $conn->query($sql);
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $id_user = $row['id'];
+    }
+    if($id_user != -1){
+        $stmt = $conn->prepare("");
+    }
 } else {
-    echo "devi loggarti caca";
+    echo "Devi prima <a href='vote_page.php'>votare</a>
+          oppure <a href='login.php'>loggarti</a> se non l'hai ancora fatto";
 }
 ?>
 </body>

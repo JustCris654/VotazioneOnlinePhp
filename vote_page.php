@@ -34,7 +34,7 @@ $conn->close();
         ?>
         <label for="opera<?= $i ?>"> <img style="width: 33%; height: auto" src="<?= $pictures[$i] ?>"
                                           alt="Opera numero <?= $i ?>">Vota opera <?= $i ?> </label>
-        <input type="radio" name="vote" id='opera<?= $i ?>' value='opera<?= $i ?>' <?= $i == 0 ? 'checked' : '' ?>">
+        <input type="radio" name="vote" id='opera<?= $i ?>' value='opera<?= $i ?>' <?= $i == 0 ? 'checked' : '' ?>>
         <br>
         <?php
     }

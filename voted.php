@@ -17,18 +17,36 @@ $conn = connect_db("root", "", "db_esercizio7");
 if (isset($_POST['vote']) and isset($_SESSION['user_auth'])) {
     $voted_picture = $_POST['vote'];
     $user = $_SESSION['user_auth'];
-    ?>
-    <p>Hai votato <?= $voted_picture ?> loggato come <?= $user ?></p>
-    <?php
-    $sql = "SELECT id FROM utenti WHERE nome_utente='$user'";
+    echo "<h1>user: $user, votato: $voted_picture</h1>";
+
+    //retrieve user id from the user name
+    $sql = "SELECT id_utente FROM db_esercizio7.utenti WHERE nome_utente = '$user'";
     $id_user = -1;
     $result = $conn->query($sql);
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
-        $id_user = $row['id'];
+        $id_user = $row['id_utente'];
     }
-    if($id_user != -1){
-        $stmt = $conn->prepare("");
+    echo "<h1>id user $id_user</h1>";
+
+    //retrieve the picture id from the name of it
+    $sql = "SELECT id_opera FROM db_esercizio7.opere WHERE nome_opera = '$voted_picture'";
+    $id_opera = -1;
+    $result = $conn->query($sql);
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $id_opera = $row['id_opera'];
+    }
+    echo "<h1>id opera $id_opera</h1>";
+
+
+    if ($id_user != -1 and $id_opera != -1) {
+        $stmt = $conn->prepare("INSERT INTO db_esercizio7.voti (utente, opera)
+            VALUES (?, ?)");
+        $stmt->bind_param("ii", $id_user, $id_opera);
+        $stmt->execute();
+        echo "<p>Hai votato $voted_picture loggato come $user</p>";
+        session_destroy();
     }
 } else {
     echo "Devi prima <a href='vote_page.php'>votare</a>

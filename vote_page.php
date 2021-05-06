@@ -32,9 +32,10 @@ $conn->close();
     <?php
     for ($i = 0; $i < count($pictures); $i++) {
         ?>
-        <label for="opera<?= $i ?>"> <img style="width: 33%; height: auto" src="<?= $pictures[$i] ?>"
-                                          alt="Opera numero <?= $i ?>">Vota opera <?= $i ?> </label>
-        <input type="radio" name="vote" id='opera<?= $i ?>' value='opera<?= $i ?>' <?= $i == 0 ? 'checked' : '' ?>>
+        <label for="opera<?= $i+1 ?>"> <img style="width: 33%; height: auto" src="<?= $pictures[$i] ?>"
+                                          alt="Opera numero <?= $i+1 ?>">Vota opera <?= $i+1 ?> </label>
+        <input type="radio" name="vote" id='opera<?= $i+1 ?>' value='opera<?= $i+1 ?>' <?= $i == 0 ? 'checked' : '' ?>>
+        <h1>opera<?=$i+1?></h1>
         <br>
         <?php
     }

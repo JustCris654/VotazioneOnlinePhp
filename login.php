@@ -42,27 +42,30 @@ if ($_GET['error'] == 1) {
     }
 } else {
     if (isset($_REQUEST['login'])) {
+
         $username = $_POST['username'];
         $password = $_POST['password'];
+//      echo "<script>console.log('$username', '$password')</script>";
 
-        $sql = "SELECT nome_utente, password WHERE nome_utente='$username' AND password = '$password'";
+        $sql = "SELECT nome_utente, password FROM utenti WHERE nome_utente=\"$username\" AND password = \"$password\"";
 
         $result = $conn->query($sql);
-
-        if ($result->num_rows > 0) {
-            header('Location: /login_result.php?login=1');
+        if ($result->num_rows == 1) {
+            $conn->close();
             $_SESSION['user_auth'] = $username;
+            header('Location: /login_result.php?login=1');
         } else {
             header('Location: /login.php?error=1');
         }
+        exit();
     } else {
         ?>
         <form action="login.php" method="post">
             <label for="username">Inserisci username:</label>
-            <input type="text" name="username" id="username"> <br>
+            <input type="text" name="username" id="username" required> <br>
 
             <label for="password">Inserisci password:</label>
-            <input type="password" name="password" id="password"> <br>
+            <input type="password" name="password" id="password" required> <br>
             <input type="submit" value="Login" name="login" id="login">
         </form>
         <?php

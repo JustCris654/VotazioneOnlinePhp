@@ -1,7 +1,7 @@
 <!doctype html>
 <?php
 session_start();
-if(isset($_REQUEST['login'])){
+if (isset($_REQUEST['login'])) {
     $result = $_GET['login'];
 }
 ?>
@@ -15,19 +15,19 @@ if(isset($_REQUEST['login'])){
 </head>
 <body>
 <h1>
-<?php
-if($result=="1"){
-    $user = $_SESSION['user_auth'];
-    echo "Login effettuato, Benvenuto $user";
+    <?php
+    if ($result == "1") {
+        $user = $_SESSION['user_auth'];
+        echo "Login effettuato, Benvenuto $user";
+        ?>
+        <p>Vai alla <a href="vote_page.php">votazione</a></p>
+        <?php
+        } elseif ($result == "0") {
+        echo "Errore, credenziali errate"; ?>
+        <p>Torna alla pagina di <a href="login.php">Login</a></p>
+        <?php
+    }
     ?>
-    <p>Vai alla <a href="vote_page.php">votazione</a></p>
-    <?php
-} elseif ($result == "0"){
-    echo "Errore, credenziali errate"; ?>
-    <p>Torna alla pagina di <a href="login.php">Login</a></p>
-    <?php
-}
-?>
 </h1>
 </body>
 </html>
